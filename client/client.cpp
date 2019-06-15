@@ -67,6 +67,11 @@ void printBuffer(const char *header, char *buffer){
 int main(int argc, char *argv[]) {
 //*******************************************************************
 // Initialization
+
+long long int n_s, z, e, n_ca, e_ca;
+ 	e_ca=1011001;
+ 	n_ca=8676097;
+
 // What are the important data structures?
 //*******************************************************************
 	

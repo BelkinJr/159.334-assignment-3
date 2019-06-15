@@ -60,10 +60,97 @@ void printBuffer(const char *header, char *buffer){
   cout << "---" << endl;
 }
 
+bool euclidean (long long int e, long long int z) { 
+  long long int dividend, divisor, remainder, quotient;
+  if (e>z) { dividend=e; divisor=z; }
+  else { dividend=z; divisor=e; }
+  while (1) {
+    quotient=dividend/divisor;
+    remainder=dividend%divisor;
+    if (remainder==0) {
+      if (divisor==1) return true;
+      else return false;
+    } 
+    else {
+      dividend=divisor;
+      divisor=remainder;
+      //cout<<"debug euclidean"<<endl;
+    }
+  }
+}
+
+long long int find_e (long long int n, long long int z) {
+  long long int e;
+  for (long long int i=1; i<n; i++) {
+    if (euclidean(i,z)) e=i;
+    //cout<<"debug"<<endl;
+    }
+  return e;
+}
+void find_d (long long int z, long long int e, long long int &d) {
+  long long int y[3], x[3], gcd_w[3], k; 
+  int i=2;
+  x[1]=1; x[2]=0;
+  y[1]=0; y[2]=1;
+  gcd_w[1]=z;
+  gcd_w[2]=e;
+  while (1) {
+    k=gcd_w[i-1]/gcd_w[i];
+    i++;
+    x[i]=x[i-2]-(k*x[i-1]);
+    y[i]=y[i-2]-(k*y[i-1]);
+    gcd_w[i]=gcd_w[i-2]-(k*gcd_w[i-1]);
+    printf("x[i]=%lld y[i]=%lld gcd_w[i]=%lld k=%lld \n\n",x[i],y[i],gcd_w[i],k);
+    getchar();
+    if (gcd_w[i]==1) {
+      if (y[i]<0) {d=y[i]+z;
+      } else {
+        d=y[i];
+      }
+      break;
+    }
+    x[1]=x[i-1]; x[2]=x[i];
+    y[1]=y[i-1]; y[2]=y[i];
+    gcd_w[1]=gcd_w[i-1];
+    gcd_w[2]=gcd_w[i];
+    i--;
+  }
+}
+
+long long int repeatedsquare (long long int x,long long int e,long long int n) {
+  long long int y=1;
+  while (e>0) {
+    if ((e%2)==0) {
+      x=(x*x)%n;
+      e=e/2;
+    }
+    else {
+      y=(x*y)%n;
+      e=e-1;
+    }
+  }
+ return y;
+}
+
+
 //*******************************************************************
 //MAIN
 //*******************************************************************
 int main(int argc, char *argv[]) {
+
+  long long int p,q,n_s, z, e, d_ca, n_ca;
+//*******************************************************
+//VALUES KNOWN TO SERVER
+//*******************************************************  
+  p=2381;
+  q=2843;
+  n_s=p*q;
+  z=(p-1)*(q-1);
+  e=1046527;
+  d_ca=3029101;
+  n_ca=8676097;
+
+
 	
 //********************************************************************
 // INITIALIZATION of the SOCKET library
